@@ -1,0 +1,264 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 90%;
+    max-width: 500px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    color: #333;
+    font-size: 28px;
+    margin: 0;
+}
+
+.settings-btn {
+    background: none;
+    border: none;
+    color: #777;
+    font-size: 20px;
+    cursor: pointer;
+    outline: none;
+}
+
+.task-input {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.task-input input[type="text"] {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px 0 0 6px;
+    font-size: 16px;
+    outline: none;
+}
+
+.task-input button {
+    background-color: #5cb85c;
+    color: #fff;
+    border: none;
+    padding: 12px 15px;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+    font-size: 16px;
+    outline: none;
+}
+
+.task-input button:hover {
+    background-color: #4cae4c;
+}
+
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.task:last-child {
+    border-bottom: none;
+}
+
+.task input[type="checkbox"] {
+    margin-right: 15px;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.task input[type="checkbox"]::before {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: transparent;
+    font-size: 14px;
+}
+
+.task input[type="checkbox"]:checked {
+    background-color: #5cb85c;
+    border-color: #5cb85c;
+}
+
+.task input[type="checkbox"]:checked::before {
+    color: #fff;
+}
+
+.task label {
+    flex-grow: 1;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+}
+
+.task.done label {
+    text-decoration: line-through;
+    color: #777;
+}
+
+.task .actions {
+    display: flex;
+    gap: 10px;
+    margin-left: 15px;
+}
+
+.task .actions button {
+    background: none;
+    border: none;
+    color: #777;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.task .actions button:hover {
+    background-color: #eee;
+}
+
+.task .actions .edit-btn:hover {
+    color: #007bff;
+}
+
+.task .actions .delete-btn:hover {
+    color: #dc3545;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter {
+    display: flex;
+    gap: 10px;
+}
+
+.filter-btn {
+    background: none;
+    border: 1px solid #ddd;
+    color: #555;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    outline: none;
+}
+
+.filter-btn.active {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.filter-btn:hover:not(.active) {
+    border-color: #007bff;
+    color: #007bff;
+}
+
+#clear-completed {
+    background: none;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 14px;
+    outline: none;
+}
+
+#clear-completed:hover {
+    text-decoration: underline;
+}
+
+/* Settings Panel */
+.settings-panel {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    transition: right 0.3s ease-in-out;
+    z-index: 100;
+}
+
+.settings-panel.open {
+    right: 0;
+}
+
+.settings-panel h3 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.setting-option {
+    margin-bottom: 20px;
+}
+
+.setting-option label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: bold;
+}
+
+.setting-option select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
+}
+
+#close-settings {
+    background: none;
+    border: none;
+    color: #777;
+    font-size: 18px;
+    cursor: pointer;
+    outline: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+#close-settings:hover {
+    color: #333;
+}

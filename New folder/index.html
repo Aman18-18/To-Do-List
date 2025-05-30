@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>To-Do List</h1>
+            <button class="settings-btn"><i class="fas fa-ellipsis-v"></i></button>
+        </div>
+        <div class="task-input">
+            <input type="text" id="new-task" placeholder="Add new task...">
+            <button id="add-task"><i class="fas fa-plus"></i></button>
+        </div>
+        <ul class="task-list">
+            <li class="task">
+                <input type="checkbox" id="task-1">
+                <label for="task-1">Grocery Shopping</label>
+                <div class="actions">
+                    <button class="edit-btn"><i class="fas fa-pen"></i></button>
+                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                </div>
+            </li>
+            <li class="task done">
+                <input type="checkbox" id="task-2" checked>
+                <label for="task-2">Book Appointment</label>
+                <div class="actions">
+                    <button class="edit-btn"><i class="fas fa-pen"></i></button>
+                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                </div>
+            </li>
+            <li class="task">
+                <input type="checkbox" id="task-3">
+                <label for="task-3">Walk the Dog</label>
+                <div class="actions">
+                    <button class="edit-btn"><i class="fas fa-pen"></i></button>
+                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                </div>
+            </li>
+            </ul>
+        <div class="controls">
+            <div class="filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="pending">Pending</button>
+                <button class="filter-btn" data-filter="completed">Completed</button>
+            </div>
+            <button id="clear-completed"><i class="fas fa-check-double"></i> Clear Completed</button>
+        </div>
+    </div>
+
+    <div class="settings-panel">
+        <h3>Settings</h3>
+        <div class="setting-option">
+            <label>Theme:</label>
+            <select id="theme-select">
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+                </select>
+        </div>
+        <div class="setting-option">
+            <label>Sort By:</label>
+            <select id="sort-select">
+                <option value="added">Date Added</option>
+                <option value="alphabetical">Alphabetical</option>
+                </select>
+        </div>
+        <button id="close-settings"><i class="fas fa-times"></i> Close</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const taskInput = document.getElementById('new-task');
+            const addTaskButton = document.getElementById('add-task');
+            const taskList = document.querySelector('.task-list');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const clearCompletedButton = document.getElementById('clear-completed');
+            const settingsButton = document.querySelector('.settings-btn');
+            const settingsPanel = document.querySelector('.settings-panel');
+            const closeSettingsButton = document.getElementById('close-settings');
+
+            // Function to add a new task
+            addTaskButton.addEventListener('click', () => {
+                const taskText = taskInput.value.trim();
+                if (taskText !== '') {
+                    const newTask = createTaskElement(taskText);
+                    taskList.appendChild(newTask);
+                    taskInput.value = '';
+                }
+            });
+
+            taskInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    addTaskButton.click();
+                }
+            });
+
+            // Function to create a new task element
+            function createTaskElement(text) {
+                const listItem = document.createElement('li');
+                listItem.classList.add('task');
+                listItem.innerHTML = `
+                    <input type="checkbox" id="task-${Date.now()}">
+                    <label for="task-${Date.now()}">${text}</label>
+                    <div class="actions">
+                        <button class="edit-btn"><i class="fas fa-pen"></i></button>
+                        <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+                addEventListenersToTask(listItem);
+                return listItem;
+            }
+
+            // Function to add event listeners to a task item
+            function addEventListenersToTask(taskItem) {
+                const checkbox = taskItem.querySelector('input[type="checkbox"]');
+                const label = taskItem.querySelector('label');
+                const deleteButton = taskItem.querySelector('.delete-btn');
+
+                checkbox.addEventListener('change', () => {
+                    taskItem.classList.toggle('done', checkbox.checked);
+                });
+
+                deleteButton.addEventListener('click', () => {
+                    taskItem.remove();
+                });
+
+                // Implement edit functionality if needed
+                // const editButton = taskItem.querySelector('.edit-btn');
+                // editButton.addEventListener('click', () => { ... });
+            }
+
+            // Filter tasks
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    document.querySelector('.filter-btn.active').classList.remove('active');
+                    button.classList.add('active');
+                    const filter = button.dataset.filter;
+                    taskList.childNodes.forEach(task => {
+                        if (task.nodeType === 1) { // Ensure it's an element node
+                            const isDone = task.classList.contains('done');
+                            switch (filter) {
+                                case 'all':
+                                    task.style.display = 'flex';
+                                    break;
+                                case 'pending':
+                                    task.style.display = isDone ? 'none' : 'flex';
+                                    break;
+                                case 'completed':
+                                    task.style.display = isDone ? 'flex' : 'none';
+                                    break;
+                            }
+                        }
+                    });
+                });
+            });
+
+            // Clear completed tasks
+            clearCompletedButton.addEventListener('click', () => {
+                taskList.childNodes.forEach(task => {
+                    if (task.nodeType === 1 && task.classList.contains('done')) {
+                        task.remove();
+                    }
+                });
+            });
+
+            // Toggle settings panel
+            settingsButton.addEventListener('click', () => {
+                settingsPanel.classList.add('open');
+            });
+
+            closeSettingsButton.addEventListener('click', () => {
+                settingsPanel.classList.remove('open');
+            });
+        });
+    </script>
+</body>
+</html>
