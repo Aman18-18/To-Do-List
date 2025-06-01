@@ -14,7 +14,8 @@ p{
 }
 
 .thumbnail-row{
-    margin-bottom: 12px;;
+    margin-bottom: 12px;
+    position: relative;
 }
 .video-title{
     margin-top: 0;
@@ -51,7 +52,39 @@ p{
         grid-template-columns:1fr 1fr 1fr ;
         column-gap: 16px;
         row-gap: 40px;
+        margin-left: 100px;
 } 
+
+@media (max-width: 750px) {
+  .video-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 751px) and (max-width: 999px) {
+  .video-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (min-width: 1000px) {
+  .video-grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+.time-span{
+    position: absolute;
+    background-color: black;
+    color: white;
+    bottom: 8px;
+    right: 6px;
+    border-radius: 2px;
+    font-family: Roboto,arial;
+    padding-left: 2px;
+    padding-top: 2px;
+    padding: 2px;
+
+}
 
 
 
